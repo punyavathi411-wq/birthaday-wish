@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Special Surprise ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+    background: radial-gradient(circle at center, #7a0d0d 0%, #2b0000 80%);
+    color:white;
+}
+
+/* SECTION SYSTEM */
+section{
+    height:100vh;
+    width:100vw;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    position:relative;
+    animation:fadeIn 0.6s ease;
+}
+
+.active{
+    display:flex;
+}
+
+/* GLASS CARD */
+.card{
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(12px);
+    padding:50px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 25px 60px rgba(0,0,0,0.6);
+}
+
+/* BUTTONS */
+button{
+    padding:12px 28px;
+    margin:15px;
+    border:none;
+    border-radius:30px;
+    background:#c9a227;
+    color:black;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#ffd700;
+    transform:scale(1.05);
+}
+
+/* FULL IMAGE PAGE */
+.full{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    top:0;
+    left:0;
+    z-index:1;
+}
+
+/* NEXT BUTTON */
+.next{
+    position:absolute;
+    bottom:40px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:5;
+}
+
+/* GIFT */
+.gift{
+    position:absolute;
+    width:150px;
+    bottom:120px;
+    z-index:5;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.gift:hover{
+    transform:scale(1.1);
+    filter:drop-shadow(0 0 15px gold);
+}
+
+/* GIFT MENU */
+.menu{
+    position:absolute;
+    bottom:80px;
+    background:rgba(0,0,0,0.85);
+    padding:20px;
+    border-radius:20px;
+    display:none;
+    flex-direction:column;
+    gap:12px;
+    z-index:6;
+}
+
+/* VIEWER */
+#viewer{
+    display:none;
+    position:absolute;
+    inset:0;
+    backdrop-filter:blur(6px);
+    background:rgba(0,0,0,0.7);
+    z-index:10;
+    justify-content:center;
+    align-items:center;
+}
+
+.viewer-box{
+    width:85%;
+    height:80%;
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+}
+
+.viewer-box iframe{
+    flex:1;
+    border:none;
+}
+
+.back-btn{
+    background:#c9a227;
+    color:black;
+    border:none;
+    padding:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* MUSIC BUTTON */
+#musicToggle{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:20;
+    background:#c9a227;
+    border:none;
+    padding:10px 15px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicToggle">🔊 Music</button>
+
+<!-- PAGE 1 -->
+<section id="p1" class="active">
+    <div class="card">
+        <h1>Ready for a small surprise? 💌</h1>
+        <button onclick="go('p2')">YES</button>
+        <button id="no1">NO</button>
+    </div>
+</section>
+
+<!-- PAGE 2 -->
+<section id="p2">
+    <img src="With You Forever 1.png" class="full">
+    <button class="next" onclick="go('p3')">Next</button>
+</section>
+
+<!-- PAGE 3 -->
+<section id="p3">
+    <div class="card">
+        <h1>Will YOU PLS ACCEPT THE GIFT 🥺</h1>
+        <img src="cat.png" style="width:300px;">
+        <button onclick="go('p4')">YES</button>
+        <button id="no2">NO</button>
+    </div>
+</section>
+
+<!-- PAGE 4 -->
+<section id="p4">
+    <img src="final.png" class="full">
+
+    <img src="box.png" class="gift" onclick="toggleMenu()">
+
+    <div class="menu" id="menu">
+        <button onclick="openItem('greeting2.png')">💌 Greeting for my love</button>
+        <button onclick="openItem('With love, Cherry.png')">💖 A Letter for my Supporter</button>
+        <button onclick="openItem('shirt.jpeg')">👕A Shirt for my Beloved Hero </button>
+        <button onclick="openItem('chocolate.png')">🍫 Chocolate for my sweetest Man</button>
+    </div>
+
+    <div id="viewer">
+        <div class="viewer-box">
+            <iframe id="viewerFrame"></iframe>
+            <button class="back-btn" onclick="closeViewer()">⬅ Back</button>
+        </div>
+    </div>
+</section>
+
+<script>
+function go(id){
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+/* Moving NO buttons */
+document.getElementById("no1").onmouseover=function(){
+    this.style.position="absolute";
+    this.style.top=Math.random()*500+"px";
+    this.style.left=Math.random()*800+"px";
+};
+
+document.getElementById("no2").onmouseover=function(){
+    this.style.position="absolute";
+    this.style.top=Math.random()*500+"px";
+    this.style.left=Math.random()*800+"px";
+};
+
+/* Gift menu */
+function toggleMenu(){
+    let m=document.getElementById("menu");
+    m.style.display = (m.style.display==="flex")?"none":"flex";
+}
+
+/* Viewer */
+function openItem(file){
+    document.getElementById("viewer").style.display="flex";
+    document.getElementById("viewerFrame").src=file;
+}
+
+function closeViewer(){
+    document.getElementById("viewer").style.display="none";
+    document.getElementById("viewerFrame").src="";
+}
+
+/* Music */
+const music=document.getElementById("bgMusic");
+const toggleBtn=document.getElementById("musicToggle");
+
+document.addEventListener("click",function startMusic(){
+    music.play();
+    document.removeEventListener("click",startMusic);
+});
+
+toggleBtn.addEventListener("click",function(){
+    if(music.paused){
+        music.play();
+        toggleBtn.innerHTML="🔊 Music";
+    }else{
+        music.pause();
+        toggleBtn.innerHTML="🔇 Muted";
+    }
+});
+</script>
+
+</body>
+</html>
