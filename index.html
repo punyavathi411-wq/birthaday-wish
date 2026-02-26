@@ -2,9 +2,14 @@
 <html>
 <head>
 <title>Special Surprise ❤️</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     font-family:'Segoe UI',sans-serif;
@@ -23,6 +28,7 @@ section{
     flex-direction:column;
     position:relative;
     animation:fadeIn 0.6s ease;
+    padding:20px;
 }
 
 .active{
@@ -31,12 +37,14 @@ section{
 
 /* GLASS CARD */
 .card{
-    background:rgba(0,0,0,0.45);
+    background:rgba(0,0,0,0.55);
     backdrop-filter:blur(12px);
-    padding:50px;
+    padding:40px;
     border-radius:20px;
     text-align:center;
     box-shadow:0 25px 60px rgba(0,0,0,0.6);
+    width:90%;
+    max-width:500px;
 }
 
 /* BUTTONS */
@@ -63,7 +71,7 @@ button:hover{
     position:absolute;
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:contain;
     top:0;
     left:0;
     z-index:1;
@@ -81,7 +89,7 @@ button:hover{
 /* GIFT */
 .gift{
     position:absolute;
-    width:150px;
+    width:120px;
     bottom:120px;
     z-index:5;
     cursor:pointer;
@@ -97,13 +105,15 @@ button:hover{
 .menu{
     position:absolute;
     bottom:80px;
-    background:rgba(0,0,0,0.85);
+    background:rgba(0,0,0,0.9);
     padding:20px;
     border-radius:20px;
     display:none;
     flex-direction:column;
     gap:12px;
     z-index:6;
+    width:90%;
+    max-width:300px;
 }
 
 /* VIEWER */
@@ -112,17 +122,17 @@ button:hover{
     position:absolute;
     inset:0;
     backdrop-filter:blur(6px);
-    background:rgba(0,0,0,0.7);
+    background:rgba(0,0,0,0.8);
     z-index:10;
     justify-content:center;
     align-items:center;
 }
 
 .viewer-box{
-    width:85%;
-    height:80%;
+    width:90%;
+    height:85%;
     background:white;
-    border-radius:25px;
+    border-radius:20px;
     overflow:hidden;
     display:flex;
     flex-direction:column;
@@ -154,6 +164,16 @@ button:hover{
     border-radius:20px;
     cursor:pointer;
     font-weight:bold;
+}
+
+/* Responsive Improvements */
+@media (orientation:landscape){
+    .card{
+        max-width:600px;
+    }
+    .gift{
+        width:100px;
+    }
 }
 
 @keyframes fadeIn{
@@ -191,7 +211,7 @@ button:hover{
 <section id="p3">
     <div class="card">
         <h1>Will YOU PLS ACCEPT THE GIFT 🥺</h1>
-        <img src="cat.png" style="width:300px;">
+        <img src="cat.png" style="width:70%; max-width:300px;">
         <button onclick="go('p4')">YES</button>
         <button id="no2">NO</button>
     </div>
@@ -206,7 +226,7 @@ button:hover{
     <div class="menu" id="menu">
         <button onclick="openItem('greeting2.png')">💌 Greeting for my love</button>
         <button onclick="openItem('With love, Cherry.png')">💖 A Letter for my Supporter</button>
-        <button onclick="openItem('shirt.jpeg')">👕A Shirt for my Beloved Hero </button>
+        <button onclick="openItem('shirt.jpeg')">👕 A Shirt for my Beloved Hero</button>
         <button onclick="openItem('chocolate.png')">🍫 Chocolate for my sweetest Man</button>
     </div>
 
@@ -225,16 +245,20 @@ function go(id){
 }
 
 /* Moving NO buttons */
+function moveButton(btn){
+    const maxX = window.innerWidth - 100;
+    const maxY = window.innerHeight - 50;
+    btn.style.position="absolute";
+    btn.style.left=Math.random()*maxX+"px";
+    btn.style.top=Math.random()*maxY+"px";
+}
+
 document.getElementById("no1").onmouseover=function(){
-    this.style.position="absolute";
-    this.style.top=Math.random()*500+"px";
-    this.style.left=Math.random()*800+"px";
+    moveButton(this);
 };
 
 document.getElementById("no2").onmouseover=function(){
-    this.style.position="absolute";
-    this.style.top=Math.random()*500+"px";
-    this.style.left=Math.random()*800+"px";
+    moveButton(this);
 };
 
 /* Gift menu */
@@ -276,3 +300,4 @@ toggleBtn.addEventListener("click",function(){
 
 </body>
 </html>
+
